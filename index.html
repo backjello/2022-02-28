@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Registrazione</title>
+    </head>
+    <body>
+        <div class="row">
+            <div class="col-3">
+                Nome :
+            </div>
+            <div class="col-9">
+                <input type="text" placeholder="Nome" id="nome">
+            </div>
+            <div class="col-3">
+                Cognome :
+            </div>
+            <div class="col-9">
+                <input type="text" placeholder="Cognome" id="cognome">
+            </div>
+            <div class="col-3">
+                Email :
+            </div>
+            <div class="col-9">
+                <input type="email" placeholder="Email" id="email">
+            </div>
+            <div class="col-3">
+                Data di nascita :
+            </div>
+            <div class="col-9">
+                <input type="date" placeholder="Data di nascita" id="dataDiNascita">
+            </div>
+            <div class="col-3">
+                Password :
+            </div>
+            <div class="col-9">
+                <input type="password" placeholder="password" id="password">
+            </div>
+            <div class="col-3">
+                Conferma password :
+            </div>
+            <div class="col-9">
+                <input type="password" placeholder="Conferma password" 
+                    id="confermaPassword">
+            </div>
+            <div id="errori" class="col-12">
+
+            </div>
+            <button onclick="registrazione()"> 
+                Registrati
+            </button>
+        </div>
+
+    <script src="dati.js"></script>
+    <script src="main.js"></script>
+    </body>
+</html>
