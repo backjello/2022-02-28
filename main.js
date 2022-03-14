@@ -8,17 +8,44 @@ function registrazione(){
         confermaPassword:document.getElementById('confermaPassword').value,
     }
     console.log(form);
-    console.log(controllaDati(form));
+    var errori=controllaDati(form)
+    console.log(errori)
+    if(errori.errore != undefined)
+        printError(errori.errore)
+    else{
+        var err=[]
+        if(!errori.maiuscolo)
+            err.push("Deve essere presente una maiuscola")
+        if(!errori.minisculo)
+            err.push("Deve essere presente una miniscuola")
+        printError(err)
+    }    
 
     if(form.password == form.confermaPassword){
         registrazioneDB(form)
     }
     else{
         var erroriBox = document.getElementById('errori')
-        erroriBox.innerHTML="Le password non coincidono"
+        printError("Le password non coincidono")
     }
 
 }
+
+function printError(errore){
+    var erroriBox = document.getElementById("errori")
+    erroriBox.innerHTML='';
+    if(typeof errore == 'object')
+        for(var i=0;i<errore.length;i++){
+            erroriBox.innerHTML+=errore[i]+"<br>"
+        }
+    else
+        erroriBox.innerHTML=errore;
+}
+function containsSpecialChars(str) {
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    return specialChars.test(str);
+}
+
 
 function controllaDati(form){
     var dataDiNascita= new Date(form.dataDiNascita)
@@ -29,15 +56,14 @@ function controllaDati(form){
 
     for(var i=0;i<form.password.length;i++){
         var car=form.password[i]
-        var num = parseInt(car);
         if( car == car.toUpperCase() )
             maiuscolo=true;
         if( car == car.toLowerCase() )
             minisculo=true
-        if (typeof parseInt(car) != typeof NaN){
+        if( !isNaN(parseInt(car)))
             numero=true
-        }
-        
+        if( containsSpecialChars(car))
+            speciale=true
     }
 
     return {
@@ -63,12 +89,12 @@ function login(){
                 alert("LOGIN EFFETTUATO CON SUCCESSO")
             }
             else{
-                erroriBox.innerHTML="password sbagliata"
+                printError("password sbagliata")
             }
         }
     }
     if(utente==undefined){
-        erroriBox.innerHTML="la mail non è registrata"
+        printError("la mail non è registrata")
     }
 }
 
