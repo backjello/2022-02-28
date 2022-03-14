@@ -7,7 +7,10 @@
         <title>Registrazione</title>
     </head>
     <body>
-        <div class="row">
+        <div class="container row">
+            <h1 class="col-12 text-center" style="font-size: 50px;">
+                Registrazione
+            </h1>
             <div class="col-3">
                 Nome :
             </div>
@@ -45,12 +48,19 @@
                 <input type="password" placeholder="Conferma password" 
                     id="confermaPassword">
             </div>
-            <div id="errori" class="col-12">
+            <div id="errori" class="col-12 my-2" style="color:rgb(180, 0, 0)">
 
             </div>
-            <button onclick="registrazione()"> 
-                Registrati
-            </button>
+            <div class="col-4">
+                <button class="btn btn-primary" onclick="registrazione()">
+                    Registrati
+                </button>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-success" onclick="goToPage('login.html')">
+                    Login
+                </button>
+            </div>
         </div>
 
     <script src="dati.js"></script>

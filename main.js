@@ -10,25 +10,28 @@ function registrazione(){
     console.log(form);
     var errori=controllaDati(form)
     console.log(errori)
-    if(errori.errore != undefined)
-        printError(errori.errore)
-    else{
-        var err=[]
-        if(!errori.maiuscolo)
-            err.push("Deve essere presente una maiuscola")
-        if(!errori.minisculo)
-            err.push("Deve essere presente una miniscuola")
-        printError(err)
-    }    
-
-    if(form.password == form.confermaPassword){
-        registrazioneDB(form)
+    if(!errori){
+        //ok
+        registrazioneDB(form);
+        window.location.href="login.html";
     }
     else{
-        var erroriBox = document.getElementById('errori')
-        printError("Le password non coincidono")
+        // errori
+        if(errori.errore != undefined)
+            printError(errori.errore)
+        else{
+            var err=[]
+            if(!errori.maiuscolo)
+                err.push("Deve essere presente una maiuscola")
+            if(!errori.minisculo)
+                err.push("Deve essere presente una miniscuola")
+            if(!errori.numero)
+                err.push("Deve essere presente un numero")
+            if(!errori.speciale)
+                err.push("Deve essere presente un carattere speciale")
+            printError(err)
+        }  
     }
-
 }
 
 function printError(errore){
@@ -48,23 +51,36 @@ function containsSpecialChars(str) {
 
 
 function controllaDati(form){
+    //check password
+    if(form.password != form.confermaPassword)
+        return {errore : "Le password non coincidono"}
+
+    //check lunghezza password
+    if(form.password.length<8)
+        return {errore : "La password deve essere lunga almeno 8 caratteri"}
+
+    //check date
     var dataDiNascita= new Date(form.dataDiNascita)
     if(dataDiNascita.getTime() > new Date().getTime())
         return {errore : "la data di nascita non può essere futura"}
     
     var maiuscolo=false,minisculo=false,numero=false,speciale=false;
 
+    //check password char
     for(var i=0;i<form.password.length;i++){
         var car=form.password[i]
-        if( car == car.toUpperCase() )
-            maiuscolo=true;
-        if( car == car.toLowerCase() )
-            minisculo=true
-        if( !isNaN(parseInt(car)))
-            numero=true
-        if( containsSpecialChars(car))
+        if( containsSpecialChars(car) )
             speciale=true
+        else if( !isNaN(parseInt(car)))
+            numero=true
+        else if( car == car.toUpperCase() )
+            maiuscolo=true;
+        else if( car == car.toLowerCase() )
+            minisculo=true
     }
+
+    if(maiuscolo && minisculo && numero && speciale)
+        return false
 
     return {
         maiuscolo : maiuscolo,
@@ -79,14 +95,18 @@ function login(){
     var utente=undefined
     var email=document.getElementById("email").value
     var password=document.getElementById("password").value
-    var erroriBox = document.getElementById("errori")
-    console.log(utenti)
+
+    
+    if(email.length==0 || password.length==0)
+        printError("Compila tutti i campi")
+
     for (var i=0;i<utenti.length;i++){
         var u=utenti[i];
         if(u.email==email){ //ho trovato l'utente
             utente=u;
             if(u.password==password){
-                alert("LOGIN EFFETTUATO CON SUCCESSO")
+                goToPage("home.html")
+                return utente;
             }
             else{
                 printError("password sbagliata")
@@ -99,4 +119,6 @@ function login(){
 }
 
 
-
+function goToPage(page){
+    window.location.href=page
+}

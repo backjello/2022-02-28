@@ -7,7 +7,8 @@
         <title>Login</title>
     </head>
     <body>
-        <div class="row">
+        <div class="row container">
+            <h1 class="col-12 text-center">Login</h1>
             <div class="col-3">
                 Email :
             </div>
@@ -20,12 +21,19 @@
             <div class="col-9">
                 <input type="password" placeholder="password" id="password">
             </div>
-            <div id="errori" class="col-12">
+            <div id="errori" class="col-12 my-2" style="color:rgb(128, 0, 0)"> 
 
             </div>
-            <button onclick="login()"> 
-                Login
-            </button>
+            <div class="col-4">
+                <button onclick="login()" class="btn btn-primary">
+                    Login
+                </button>
+            </div>
+            <div class="col-4">
+                <button onclick="goToPage('index.html')" class="btn btn-success" >
+                    Registrati
+                </button>
+            </div>
         </div>
 
     <script src="dati.js"></script>
