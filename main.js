@@ -105,6 +105,8 @@ function login(){
         if(u.email==email){ //ho trovato l'utente
             utente=u;
             if(u.password==password){
+                //il login è avvenuto con successo
+                sessionStorage.setItem("utente",JSON.stringify(utente))
                 goToPage("home.html")
                 return utente;
             }
@@ -121,4 +123,27 @@ function login(){
 
 function goToPage(page){
     window.location.href=page
+}
+function aggiornaDati(){
+    var utente=sessionStorage.getItem("utente")
+
+    if(utente == undefined || utente == ""){
+        //non è stato effettuato il login
+        goToPage("login.html")
+    }
+    else{
+        //login 
+        utente=JSON.parse(utente);
+        document.getElementById("nome").innerHTML=utente.nome
+        document.getElementById("cognome").innerHTML=utente.cognome
+        document.getElementById("dataDiNascita").innerHTML=utente.dataDiNascita
+        document.getElementById("nomeTitolo").innerHTML=utente.nome+" "+utente.cognome
+    }
+}
+
+function logout(){
+    sessionStorage.clear()
+    sessionStorage.setItem("utente","")  
+    
+    goToPage("login.html")
 }
